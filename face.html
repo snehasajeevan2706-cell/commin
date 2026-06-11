@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('signbridge_theme') || 'default');</script>
   <title>SignBridge — Face AI</title>
-  <link rel="stylesheet" href="css/main.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="main.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
@@ -25,6 +26,7 @@
     <li><a href="face.html" class="active">Face AI</a></li>
   </ul>
   <div class="nav-cta"><a href="detect.html" class="btn-nav">Sign Detection</a></div>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Theme">🎨</button>
   <button class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></button>
 </nav>
 
@@ -142,6 +144,7 @@
 
 </div>
 
-<script src="js/face.js"></script>
+<script src="main.js"></script>
+<script src="face.js"></script>
 </body>
 </html>

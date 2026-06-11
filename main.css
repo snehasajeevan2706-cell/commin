@@ -1,5 +1,5 @@
 /* === SIGNBRIDGE MAIN CSS === */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mona+Sans:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap');
 
 :root {
   --bg-deep:    #050d1f;
@@ -13,10 +13,32 @@
   --white:      #f0f6ff;
   --text-muted: #7a9cc4;
   --border:     #1a3a6c;
-  --font-head:  'Space Grotesk', sans-serif;
-  --font-body:  'Inter', sans-serif;
+  --font-head:  'Mona Sans', sans-serif;
+  --font-body:  'Source Serif 4', serif;
   --radius:     14px;
   --radius-lg:  22px;
+}
+
+[data-theme="dark"] {
+  --bg-deep: #000000;
+  --bg-dark: #050a0f;
+  --bg-panel: #080f1a;
+  --bg-card: #0a1220;
+  --white: #ffffff;
+  --text-muted: #6a8aaa;
+}
+
+[data-theme="light"] {
+  --bg-deep: #f0f4ff;
+  --bg-dark: #e4ecff;
+  --bg-panel: #dce6ff;
+  --bg-card: #cdd9ff;
+  --white: #0a1628;
+  --text-muted: #4a6080;
+  --border: #b0c4e8;
+  --blue-bright: #1a6cff;
+  --cyan: #0099cc;
+  --green: #1a9e5c;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -88,6 +110,15 @@ ul { list-style: none; }
 .hamburger {
   display: none; background: none; border: none;
   color: var(--white); font-size: 1.3rem; cursor: pointer;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
 }
 
 /* ── HERO ── */
@@ -375,6 +406,8 @@ ul { list-style: none; }
 }
 .camera-wrap canvas, .camera-wrap video {
   width: 100%; height: 100%; object-fit: cover; display: block;
+  transform:scaleX(-1);
+  
 
 }
 .cam-overlay {

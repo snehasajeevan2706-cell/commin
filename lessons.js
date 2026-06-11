@@ -101,8 +101,9 @@ function initNavbar() {
 
 function switchTab(tab) {
   currentTab = tab;
+  const idMap = { alpha: 'tabAlpha', numbers: 'tabNums', phrases: 'tabPhrases' };
   ['alpha','numbers','phrases'].forEach(t => {
-    document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1)).classList.toggle('active', t === tab);
+    document.getElementById(idMap[t]).classList.toggle('active', t === tab);
   });
   renderGrid();
 }

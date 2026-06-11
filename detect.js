@@ -193,6 +193,8 @@ function onResults(results) {
   canvas.height = video.videoHeight;
 
   ctx.save();
+  ctx.translate(canvas.width, 0);
+  ctx.scale(-1, 1); // Mirror for selfie view
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
 
@@ -239,7 +241,7 @@ function onResults(results) {
       drawCorner(ctx, xMax, yMax, bLen, false, false);
 
       // Detect sign
-      const fingers = getFingerStates(landmarks);
+      const fingers = getFingerStates(landmarks, handedness);
       const sign = detectSign(landmarks, fingers, handedness);
       const conf = Math.floor(75 + Math.random() * 23);
 
@@ -286,13 +288,14 @@ function roundRect(ctx, x, y, w, h, r) {
 }
 
 // ── FINGER DETECTION ──
-function getFingerStates(lm) {
+function getFingerStates(lm, handedness) {
   // Returns array of 5 booleans [thumb, index, middle, ring, pinky]
   const tips  = [4, 8, 12, 16, 20];
   const mids  = [3, 6, 10, 14, 18];
   const up = [];
-  // Thumb: compare x
-  up.push(lm[4].x < lm[3].x);
+  // Thumb direction depends on handedness in mirrored selfie view.
+  const thumbUp = handedness === 'Right' ? lm[4].x < lm[3].x : lm[4].x > lm[3].x;
+  up.push(thumbUp);
   // Others: compare y
   for (let i = 1; i < 5; i++) {
     up.push(lm[tips[i]].y < lm[mids[i]].y);

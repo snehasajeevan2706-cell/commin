@@ -1,8 +1,42 @@
-// Main JS — navbar scroll, hamburger
+// Main JS — navbar scroll, hamburger, theme toggle
+const THEME_ORDER = ['default', 'dark', 'light'];
+
+function getSavedTheme() {
+  const theme = localStorage.getItem('signbridge_theme');
+  return THEME_ORDER.includes(theme) ? theme : 'default';
+}
+
+function applyTheme(theme) {
+  const nextTheme = THEME_ORDER.includes(theme) ? theme : 'default';
+  document.documentElement.setAttribute('data-theme', nextTheme);
+  localStorage.setItem('signbridge_theme', nextTheme);
+
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    const icon = nextTheme === 'dark' ? '🌙' : nextTheme === 'light' ? '☀️' : '🎨';
+    themeToggle.textContent = icon;
+    themeToggle.setAttribute('aria-label', `Theme: ${nextTheme}`);
+    themeToggle.title = `Theme: ${nextTheme}`;
+  }
+}
+
+function cycleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'default';
+  const nextIndex = (THEME_ORDER.indexOf(currentTheme) + 1) % THEME_ORDER.length;
+  applyTheme(THEME_ORDER[nextIndex]);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const navbar = document.getElementById('navbar');
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.querySelector('.nav-links');
+
+  applyTheme(getSavedTheme());
+
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', cycleTheme);
+  }
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 40) navbar.classList.add('scrolled');
