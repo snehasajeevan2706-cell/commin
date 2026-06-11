@@ -66,6 +66,14 @@
         <button class="tab" id="tabNumbers" onclick="setMode('numbers')"><i class="fa-solid fa-hand-point-up"></i> Numbers</button>
         <button class="tab" id="tabGestures" onclick="setMode('gestures')"><i class="fa-solid fa-hand-peace"></i> Gestures</button>
       </div>
+      <div style="margin-top:0.75rem;display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:flex-start">
+        <button id="mirrorBtn" onclick="toggleMirror()" type="button"
+          class="tab"
+          style="font-family:var(--font-head);background:none;border:1px solid var(--border);color:var(--text-muted);"
+        >
+          <i class="fa-solid fa-left-right"></i> Mirror
+        </button>
+      </div>
       <div id="modeDesc" class="info-card" style="text-align:center;padding:0.8rem;font-size:0.85rem;color:var(--text-muted)">
         <i class="fa-solid fa-circle-info" style="color:var(--blue-bright)"></i>
         Show your hand to the camera and hold a sign. ASL mode detects letters A–Z.
