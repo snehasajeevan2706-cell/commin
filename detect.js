@@ -295,8 +295,7 @@ function getFingerStates(lm, handedness) {
   const up = [];
   // Thumb direction depends on handedness in mirrored selfie view.
   const thumbUp = handedness === 'Right' ? lm[4].x < lm[3].x : lm[4].x > lm[3].x;
-  up.push(thumbUp);
-  // Others: compare y
+  up.push(thumbUp);  // Others: compare y
   for (let i = 1; i < 5; i++) {
     up.push(lm[tips[i]].y < lm[mids[i]].y);
   }
