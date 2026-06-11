@@ -9,6 +9,7 @@ let lastLogTime = 0;
 let frameCount = 0;
 let lastFpsTime = performance.now();
 let showMesh = true;
+let isMirrored = false;
 
 const video = document.getElementById('inputVideo');
 const canvas = document.getElementById('outputCanvas');
@@ -76,6 +77,7 @@ window.addEventListener('DOMContentLoaded', () => {
     `<i class="fa-solid fa-circle-info" style="color:var(--blue-bright)"></i> ${MODE_DESCS.signs}`;
   updateRefChart();
   setMode('signs');
+  canvas.style.transform = 'scaleX(1)';
   initNavbar();
 });
 
@@ -101,6 +103,24 @@ function setMode(mode) {
 function updateRefChart() {
   document.getElementById('refChart').innerHTML =
     `<div style="font-size:0.82rem;color:var(--white);line-height:2">${REF_CHARTS[currentMode]}</div>`;
+}
+
+function toggleMirror() {
+  isMirrored = !isMirrored;
+  const btn = document.getElementById('mirrorBtn');
+  if (isMirrored) {
+    canvas.style.transform = 'scaleX(-1)';
+    btn.classList.add('active');
+    btn.style.borderColor = 'var(--blue-bright)';
+    btn.style.color = 'var(--white)';
+    addLog('Mirror ON', 'var(--cyan)');
+  } else {
+    canvas.style.transform = 'scaleX(1)';
+    btn.classList.remove('active');
+    btn.style.borderColor = 'var(--border)';
+    btn.style.color = 'var(--text-muted)';
+    addLog('Mirror OFF', 'var(--text-muted)');
+  }
 }
 
 // ── CAMERA ──
@@ -193,8 +213,6 @@ function onResults(results) {
   canvas.height = video.videoHeight;
 
   ctx.save();
-  ctx.translate(canvas.width, 0);
-  ctx.scale(-1, 1); // Mirror for selfie view
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
 
@@ -293,9 +311,10 @@ function getFingerStates(lm, handedness) {
   const tips  = [4, 8, 12, 16, 20];
   const mids  = [3, 6, 10, 14, 18];
   const up = [];
-  // Thumb direction depends on handedness in mirrored selfie view.
-  const thumbUp = handedness === 'Right' ? lm[4].x < lm[3].x : lm[4].x > lm[3].x;
-  up.push(thumbUp);
+  // Thumb direction depends on hand side and mirror state.
+  const isRight = handedness === 'Right';
+  const mirrorFlip = isMirrored ? !isRight : isRight;
+  up.push(mirrorFlip ? lm[4].x > lm[3].x : lm[4].x < lm[3].x);
   // Others: compare y
   for (let i = 1; i < 5; i++) {
     up.push(lm[tips[i]].y < lm[mids[i]].y);
